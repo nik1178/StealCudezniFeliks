@@ -6,6 +6,7 @@ import net.sourceforge.tess4j.*;
 public class GetBookWords{
     ArrayList<String> allBookWords = new ArrayList<>();
     String txtFileName;
+    int firstPageNum = 1;
     int startPage = 1;
     int endPage = -1;
     GetBookWords(File file){
@@ -48,13 +49,16 @@ public class GetBookWords{
 
         File pageImage = new File(pageLocation);
         if(!pageImage.exists()){
-            System.out.println("Page " + currentPage + " doesn't exist.");
-            return "";
+            if(currentPage>99){
+                System.out.println("Page " + currentPage + " doesn't exist.");
+                return "";
+            }
+            return readPage(chapter, currentPage+1, endPage);
         }
         //----------------------------------------------------------------------------------------------
 
         System.out.println("Reading page " + currentPage);
-        String pageText = "Stran: " + currentPage + "\n" + getImgText(pageLocation) + readPage(chapter, currentPage+1, endPage) + " ";
+        String pageText = "Stran: " + firstPageNum++ + " -------------------------------------------------\n" + getImgText(pageLocation) + readPage(chapter, currentPage+1, endPage) + " ";
         return pageText;
     }
     public String getImgText(String imageLocation) {

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.io.*;
 public class FindGerman {
     static ArrayList<String> allGerWords = new ArrayList<>();
+    static int pageNum = 5;
 
     static void getAllGerWords(String filePath){
         File file = new File(filePath);
@@ -25,13 +26,28 @@ public class FindGerman {
     public static ArrayList<String> findGerman(ArrayList<String> allWords){
         System.out.println("Finding sentences with german.");
         ArrayList<String> germanSentences = new ArrayList<>();
+        ArrayList<String> rawGermanSentences = new ArrayList<>();
         for(int i=0; i<allWords.size(); i++){
             //Compare to all german words
+            if(i%(allWords.size()/100)==0) System.out.println(i*100/allWords.size()+"%");
+            //System.out.println(allWords.get(i));
+            if(allWords.get(i).equals("Stran:")){
+                pageNum++;
+                continue;
+            }
+            //System.out.println("!" + allWords.get(i) + "!");
             int j = allGerWords.indexOf(allWords.get(i));
             if(j==-1) continue;
-            String gerSentence = getGerSentence(i, allWords);
+
+            String rawGerSentence = getGerSentence(i, allWords);
+            if(!rawGermanSentences.isEmpty() && rawGerSentence.equals(rawGermanSentences.get(rawGermanSentences.size()-1))) continue;
+            rawGermanSentences.add(rawGerSentence);
+
+            int printPageNum = pageNum-1;
+            String gerSentence = "\nStran " + printPageNum + ": " +  allWords.get(i) + " <--> " + rawGerSentence + "  !!??!!\n";
             //avoid duplicates
-            if(germanSentences.isEmpty() || !gerSentence.equals(germanSentences.get(germanSentences.size()-1))) germanSentences.add(gerSentence);
+            /* if(germanSentences.isEmpty() || !germanSentences.get(germanSentences.size()-1).equals(gerSentence)) */ 
+                germanSentences.add(gerSentence);
         }
         return germanSentences;
     }

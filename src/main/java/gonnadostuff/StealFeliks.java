@@ -11,6 +11,7 @@ public class StealFeliks {
     String txtFileName = "BookTxts\\CudezniFeliks.txt";
     String gerSentencesTxtFileName = "GerSentences\\NemStavki.txt";
     String gerWordsTxtPath = "wordlist-german.txt";
+    int firstPageNum = 5;
     int startChapter = 3;
     int endChapter = -1;
     int startPage = 1;
@@ -21,16 +22,17 @@ public class StealFeliks {
     StealFeliks(){
         allFeliksWords.add(".");
         //Get all the words----------------------------------------
-        GetBookWords gbw = new GetBookWords(txtFileName);
+        /* GetBookWords gbw = new GetBookWords(txtFileName);
         gbw.startPage=startPage;
+        gbw.firstPageNum=firstPageNum;
         gbw.endPage=endPage;
         gbw.readChapterImages(this.startChapter, this.endChapter);
         allFeliksWords.addAll(gbw.allBookWords);
         //---------------------------------------------------------
         //Print to file
-        PrintToTxt.printArrayList(allFeliksWords, txtFileName);
+        PrintToTxt.printArrayList(allFeliksWords, txtFileName); */
 
-        //readFeliksTxt(allFeliksWords);
+        readFeliksTxt(allFeliksWords);
 
         //Find all the german sentences
         FindGerman.getAllGerWords(gerWordsTxtPath);
@@ -48,9 +50,11 @@ public class StealFeliks {
             fileNum++;
             file = new File(filePath+fileNum+".txt");
         }
-        file = new File(filePath+--fileNum+".txt");
+        filePath = filePath+--fileNum+".txt";
+        System.out.println(filePath);
+        file = new File(filePath);
         try{
-            BufferedReader br = new BufferedReader(new FileReader(txtFileName));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             while(br.ready()){
                 String[] lineWords = br.readLine().split(" ");
                 for(String x : lineWords){
