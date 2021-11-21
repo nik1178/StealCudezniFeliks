@@ -57,9 +57,10 @@ public class StealFeliks {
             BufferedReader br = new BufferedReader(new FileReader(file));
             while(br.ready()){
                 String[] lineWords = (br.readLine() + " ||||||||||").split(" ");
-                for(String x : lineWords){
+                /* for(String x : lineWords){
                     allFeliksWords.add(x);
-                }
+                } */
+                allFeliksWords.addAll(Arrays.asList(lineWords));
             }
             br.close();
         }catch(IOException e){
