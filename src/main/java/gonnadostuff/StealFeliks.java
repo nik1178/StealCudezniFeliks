@@ -1,7 +1,7 @@
 package gonnadostuff;
 import java.util.*;
 import java.io.*;
-import net.sourceforge.tess4j.*;
+//import net.sourceforge.tess4j.*;
 
 public class StealFeliks {
     public static void main(String[] args) {
@@ -56,11 +56,12 @@ public class StealFeliks {
         try{
             BufferedReader br = new BufferedReader(new FileReader(file));
             while(br.ready()){
-                String[] lineWords = br.readLine().split(" ");
+                String[] lineWords = (br.readLine() + " ||||||||||").split(" ");
                 for(String x : lineWords){
                     allFeliksWords.add(x);
                 }
             }
+            br.close();
         }catch(IOException e){
             System.out.println("Failed getting german words from file.");
             System.out.println(e.getMessage());

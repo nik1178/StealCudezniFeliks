@@ -5,6 +5,8 @@ public class FindGerman {
     static ArrayList<String> allGerWords = new ArrayList<>();
     static int pageNum = 5;
 
+    FindGerman(){}
+
     static void getAllGerWords(String filePath){
         File file = new File(filePath);
         if(!file.exists()){
@@ -16,6 +18,7 @@ public class FindGerman {
             while(br.ready()){
                 allGerWords.add(br.readLine());
             }
+            br.close();
         }catch(IOException e){
             System.out.println("Failed getting german words from file.");
             System.out.println(e.getMessage());
@@ -27,12 +30,18 @@ public class FindGerman {
         System.out.println("Finding sentences with german.");
         ArrayList<String> germanSentences = new ArrayList<>();
         ArrayList<String> rawGermanSentences = new ArrayList<>();
+        int lineNum = 1;
         for(int i=0; i<allWords.size(); i++){
             //Compare to all german words
             if(i%(allWords.size()/100)==0) System.out.println(i*100/allWords.size()+"%");
             //System.out.println(allWords.get(i));
             if(allWords.get(i).equals("Stran:")){
                 pageNum++;
+                lineNum=1;
+                continue;
+            }
+            if(allWords.get(i).equals("||||||||||")){
+                lineNum++;
                 continue;
             }
             //System.out.println("!" + allWords.get(i) + "!");
@@ -44,7 +53,8 @@ public class FindGerman {
             rawGermanSentences.add(rawGerSentence);
 
             int printPageNum = pageNum-1;
-            String gerSentence = "\nStran " + printPageNum + ": " +  allWords.get(i) + " <--> " + rawGerSentence + "  !!??!!\n";
+            int printLineNum = lineNum-3;
+            String gerSentence = "\nStran ~" + printPageNum + " ln: ~" + printLineNum + "/~35: " +  allWords.get(i) + " <--> " + rawGerSentence + "  !!??!!\n";
             //avoid duplicates
             /* if(germanSentences.isEmpty() || !germanSentences.get(germanSentences.size()-1).equals(gerSentence)) */ 
                 germanSentences.add(gerSentence);
@@ -87,7 +97,7 @@ public class FindGerman {
 
         StringBuilder sentence = new StringBuilder("");
         while(startIndex <= endIndex){
-            sentence.append(allWords.get(startIndex) + " ");
+            if(!allWords.get(startIndex).equals("||||||||||")) sentence.append(allWords.get(startIndex) + " ");
             startIndex++;
         }
         FindGerman.skipIndex = endIndex;

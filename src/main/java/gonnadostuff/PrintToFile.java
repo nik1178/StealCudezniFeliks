@@ -4,6 +4,9 @@ import java.io.*;
 class PrintToTxt{
     static ArrayList<String> allWords;
 
+    PrintToTxt(){
+        
+    }
     public static void printArrayList(ArrayList<String> allWords, String filePath){
         File file = new File(filePath);
         printArrayList(allWords, file);

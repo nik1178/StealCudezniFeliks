@@ -1,14 +1,6 @@
 . Stran: 5 -------------------------------------------------
-8
-(D
-E
-(U
-O
-! ' Š
-_ Š
-_U
-0)
-C
+
+
 Erna Kalmus je v petnajstem letu izgubila očeta; ko je pozneje %
 poizvedovala, kaj ga je pobralo, ni dobila pravega odgovora, &
 marveč približnosti o vnetju srčnih zaklopk, ki da se je nazna-
